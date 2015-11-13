@@ -15,4 +15,10 @@ node('docker') {
     sh('go test')
   }
 
+  // Build image with Go binary
+  stage 'Build Docker image'
+  def img = docker.build("gcr.io/${project}/gceme:${env.BUILD_TAG}")
+  sh('gcloud docker -a')
+  img.push()
+
 }
