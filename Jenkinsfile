@@ -30,7 +30,7 @@ node('docker') {
     sh('curl -o /usr/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.0.1/bin/linux/amd64/kubectl ; chmod +x /usr/bin/kubectl')
     sh("kubectl --namespace=staging rollingupdate gceme-frontend --image=${img.id}")
     sh("kubectl --namespace=staging rollingupdate gceme-backend --image=${img.id}")
-    sh("echo http://`kubectl --namespace=staging get service/gceme --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > staging")
+    sh("echo http://`kubectl --namespace=staging get service/gceme-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > staging")
   }
 
   // Deploy to prod if approved
@@ -46,7 +46,7 @@ node('docker') {
     sh('curl -o /usr/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.0.1/bin/linux/amd64/kubectl ; chmod +x /usr/bin/kubectl')
     sh("kubectl --namespace=production rollingupdate gceme-frontend --image=${img.id}")
     sh("kubectl --namespace=production rollingupdate gceme-backend --image=${img.id}")
-    sh("echo http://`kubectl --namespace=production get service/gceme --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`")
+    sh("echo http://`kubectl --namespace=production get service/gceme-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`")
   }
 
 }
