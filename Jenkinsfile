@@ -1,6 +1,6 @@
 node('docker') {
 
-  // checkout scm
+  checkout scm
 
   // Kubernetes cluster info
   def cluster = 'cd'
