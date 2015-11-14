@@ -1,6 +1,12 @@
 node('docker') {
 
   echo 'workflow tutorial!'
-  env
+
+  //Print all the environment variables.
+  def env = System.getenv()
+
+  env.each{
+    println it
+  }
 
 }
