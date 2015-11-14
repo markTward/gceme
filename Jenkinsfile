@@ -2,11 +2,9 @@ node('docker') {
 
   echo 'workflow tutorial!'
 
-  //Print all the environment variables.
-  def env = System.getenv()
+  echo ${env.BUILD_TAG}
 
-  env.each{
-    println it
-  }
+  echo ${env.GIT_URL}
+  echo ${env.GIT_BRANCH}
 
 }
