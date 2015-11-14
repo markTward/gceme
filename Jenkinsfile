@@ -1,5 +1,4 @@
 node('docker') {
-  echo 'starting WorkFlow!!!'
 
   checkout scm
 
