@@ -3,7 +3,7 @@ node('docker') {
   checkout scm
 
   // Kubernetes cluster info
-  def cluster = 'cd'
+  def cluster = 'gtc'
   def zone = 'us-central1-f'
   def project = 'agile-axe-427'
 
