@@ -89,10 +89,6 @@ const (
 	  <td>Request</td>
 	  <td>{{.LBRequest}}</td>
 	</tr>
-	<tr>
-	  <td>InstanceAttributes</td>
-	  <td>{{.InstanceAttributes}}</td>
-	</tr>
 <tr>
   <td>Error</td>
   <td>{{.Error}}</td>

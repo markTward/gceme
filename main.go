@@ -26,6 +26,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"google.golang.org/cloud/compute/metadata"
+
 )
 
 type Instance struct {
@@ -39,7 +40,8 @@ type Instance struct {
 	LBRequest  string
 	ClientIP   string
 	Error      string
-	InstanceAttributes	   string
+	POD        string
+	Namespace  string
 }
 
 const version string = "1.0.5"
@@ -165,8 +167,6 @@ func newInstance() *Instance {
 	i.Project = a.assign(metadata.ProjectID)
 	i.InternalIP = a.assign(metadata.InternalIP)
 	i.ExternalIP = a.assign(metadata.ExternalIP)
-
-	i.InstanceAttributes = a.assign((metadata.InstanceAttributes()))
 
 	if a.err != nil {
 		i.Error = a.err.Error()
