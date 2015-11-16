@@ -166,7 +166,7 @@ func newInstance() *Instance {
 	i.InternalIP = a.assign(metadata.InternalIP)
 	i.ExternalIP = a.assign(metadata.ExternalIP)
 
-	i.InstanceAttributes = a.assign(metadata.InstanceAttributes)
+	i.InstanceAttributes = a.assign((metadata.InstanceAttributes()))
 
 	if a.err != nil {
 		i.Error = a.err.Error()
