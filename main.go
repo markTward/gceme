@@ -26,6 +26,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"google.golang.org/cloud/compute/metadata"
+	"os"
 
 )
 
@@ -167,6 +168,8 @@ func newInstance() *Instance {
 	i.Project = a.assign(metadata.ProjectID)
 	i.InternalIP = a.assign(metadata.InternalIP)
 	i.ExternalIP = a.assign(metadata.ExternalIP)
+	i.POD = a.assign(os.Getenv("MY_POD_NAME"))
+	i.Namespace = a.assign(os.Getenv("MY_POD_NAMESPACE"))
 
 	if a.err != nil {
 		i.Error = a.err.Error()
