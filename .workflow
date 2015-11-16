@@ -12,6 +12,11 @@ node('docker') {
     sh('go test')
   }
 
+  // Kubernetes cluster info
+  def cluster = 'gtc'
+  def zone = 'us-central1-f'
+  def project = 'agile-axe-427'
+
  // Build image with Go binary
   stage 'Build Docker image'
   def img = docker.build("gcr.io/${project}/gceme:${env.BUILD_TAG}")
