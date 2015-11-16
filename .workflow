@@ -35,7 +35,7 @@ node('docker') {
     sh("kubectl --namespace=dev rollingupdate gceme-frontend --image=${img.id}")
     sh("kubectl --namespace=dev rollingupdate gceme-backend --image=${img.id}")
 
-    sh("echo http://`kubectl --namespace=staging get service/gceme-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`")
+    sh("echo http://`kubectl --namespace=dev get service/gceme-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`")
   }
 
 }
