@@ -39,6 +39,7 @@ type Instance struct {
 	LBRequest  string
 	ClientIP   string
 	Error      string
+	TheMeta	   string
 }
 
 const version string = "1.0.5"
@@ -164,6 +165,8 @@ func newInstance() *Instance {
 	i.Project = a.assign(metadata.ProjectID)
 	i.InternalIP = a.assign(metadata.InternalIP)
 	i.ExternalIP = a.assign(metadata.ExternalIP)
+
+	i.TheMeta = a.assign(metadata)
 
 	if a.err != nil {
 		i.Error = a.err.Error()

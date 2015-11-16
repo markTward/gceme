@@ -89,6 +89,10 @@ const (
 	  <td>Request</td>
 	  <td>{{.LBRequest}}</td>
 	</tr>
+	<tr>
+	  <td>MetaData</td>
+	  <td>{{.TheMeta}}</td>
+	</tr>
 <tr>
   <td>Error</td>
   <td>{{.Error}}</td>
