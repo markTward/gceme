@@ -26,6 +26,8 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"google.golang.org/cloud/compute/metadata"
+	"os"
+
 )
 
 type Instance struct {
@@ -39,6 +41,8 @@ type Instance struct {
 	LBRequest  string
 	ClientIP   string
 	Error      string
+	POD        string
+	Namespace  string
 }
 
 const version string = "1.0.5"
@@ -98,6 +102,7 @@ func frontendMode(port int, backendURL string) {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		i := &Instance{}
+
 		resp, err := client.Do(req)
 		if err != nil {
 			w.WriteHeader(http.StatusServiceUnavailable)
@@ -151,6 +156,7 @@ func (a *assigner) assign(getVal func() (string, error)) string {
 
 func newInstance() *Instance {
 	var i = new(Instance)
+
 	if !metadata.OnGCE() {
 		i.Error = "Not running on GCE"
 		return i
@@ -164,6 +170,10 @@ func newInstance() *Instance {
 	i.Project = a.assign(metadata.ProjectID)
 	i.InternalIP = a.assign(metadata.InternalIP)
 	i.ExternalIP = a.assign(metadata.ExternalIP)
+
+	// read current POD and Namespace
+	i.POD = os.Getenv("MY_POD_NAME")
+	i.Namespace = os.Getenv("MY_POD_NAMESPACE")
 
 	if a.err != nil {
 		i.Error = a.err.Error()

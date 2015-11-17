@@ -69,6 +69,14 @@ const (
 	  <td>External IP</td>
 	  <td>{{.ExternalIP}}</td>
 	</tr>
+	<tr>
+	  <td>POD</td>
+	  <td>{{.POD}}</td>
+	</tr>
+	<tr>
+	  <td>Namespace</td>
+	  <td>{{.Namespace}}</td>
+	</tr>
   </tbody>
 </table>
 </div>
