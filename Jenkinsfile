@@ -23,9 +23,12 @@ node('docker') {
   sh('gcloud docker -a')
   img.push()
 
-  /*
+
   // Deploy image to cluster in DEV namespace
   stage 'Deploy to DEV cluster'
+  deploy_service(cluster, zone, img.id, 'dev')
+
+  /*
   docker.image('buildpack-deps:jessie-scm').inside {
     sh('apt-get update -y ; apt-get install jq')
     sh('export CLOUDSDK_CORE_DISABLE_PROMPTS=1 ; curl https://sdk.cloud.google.com | bash')
@@ -35,9 +38,11 @@ node('docker') {
     sh("kubectl --namespace=dev rollingupdate gceme-backend --image=${img.id}")
     sh("echo http://`kubectl --namespace=dev get service/gceme-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`")
   }
+  */
 
   // Deploy image to cluster in QA namespace
   stage 'Deploy to QA cluster'
+  /*
   docker.image('buildpack-deps:jessie-scm').inside {
     sh('apt-get update -y ; apt-get install jq')
     sh('export CLOUDSDK_CORE_DISABLE_PROMPTS=1 ; curl https://sdk.cloud.google.com | bash')
@@ -47,9 +52,11 @@ node('docker') {
     sh("kubectl --namespace=staging rollingupdate gceme-backend --image=${img.id}")
     sh("echo http://`kubectl --namespace=staging get service/gceme-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > staging")
   }
+  */
 
   // Deploy to prod if approved
   stage 'Approve, deploy to prod'
+  /*
   def url = readFile('staging').trim()
   input message: "Does staging at $url look good? ", ok: "Deploy to production"
   sh('gcloud docker -a')
@@ -63,7 +70,7 @@ node('docker') {
     sh("kubectl --namespace=production rollingupdate gceme-backend --image=${img.id}")
     sh("echo http://`kubectl --namespace=production get service/gceme-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`")
   }
-*/
+  */
 
 }
 
@@ -78,4 +85,11 @@ def get_branch() {
 
   return current_branch
 
+}
+
+def deploy_service (cluster, zone, image_id, namespace) {
+  echo "cluster ==> ${cluster}"
+  echo "zone ==> ${zone}"
+  echo "image_id ==> ${image_id}"
+  echo "namespace ==> ${namespace}"
 }
