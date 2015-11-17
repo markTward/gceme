@@ -3,8 +3,7 @@ node('docker') {
   checkout scm
 
   def branch = get_branch()
-  echo "Current Branch ==> ${branch}"
-  echo "Current Branch ==> ${current_branch}"
+  echo "Current Branch ==> branch"
 
 /*
   // Kubernetes cluster info
