@@ -154,7 +154,10 @@ func (a *assigner) assign(getVal func() (string, error)) string {
 }
 
 func newInstance() *Instance {
+	var pod string
+	var ns string
 	var i = new(Instance)
+
 	if !metadata.OnGCE() {
 		i.Error = "Not running on GCE"
 		return i
@@ -168,8 +171,12 @@ func newInstance() *Instance {
 	i.Project = a.assign(metadata.ProjectID)
 	i.InternalIP = a.assign(metadata.InternalIP)
 	i.ExternalIP = a.assign(metadata.ExternalIP)
-	i.POD = a.assign(os.Getenv("MY_POD_NAME"))
-	i.Namespace = a.assign(os.Getenv("MY_POD_NAMESPACE"))
+
+	pod = os.Getenv("MY_POD_NAME")
+	i.POD = a.assign(pod)
+
+	ns = os.Getenv("MY_POD_NAMESPACE")
+	i.Namespace = a.assign(ns)
 
 	if a.err != nil {
 		i.Error = a.err.Error()
