@@ -2,6 +2,10 @@ node('docker') {
 
   checkout scm
 
+  def branch = get_branch()
+  echo 'Current Branch ==> ${branch}'
+
+/*
   // Kubernetes cluster info
   def cluster = 'gtc'
   def zone = 'us-central1-f'
@@ -46,6 +50,19 @@ node('docker') {
     sh("kubectl --namespace=production rollingupdate gceme-frontend --image=${img.id}")
     sh("kubectl --namespace=production rollingupdate gceme-backend --image=${img.id}")
     sh("echo http://`kubectl --namespace=production get service/gceme-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`")
+  }
+*/
+
+  def get_branch() {
+    def current_branch = ''
+
+    // write current branch-name to file
+    sh 'git branch -a --contains `git rev-parse HEAD` | grep origin | sed \'s!\\s*remotes/origin/\\(.*\\)!\\1!\' > git-branch.txt'
+
+    // read data from file into environment-variable
+    current_branch = readFile('git-branch.txt').trim()
+    echo 'in get_branch(). current_branch ==> ${current_branch}'
+
   }
 
 }
