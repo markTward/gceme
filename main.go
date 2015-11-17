@@ -55,7 +55,9 @@ func main() {
 	flag.Parse()
 
 	if *showversion {
-		fmt.Printf("Version %s\n", version)
+		fmt.Printf("Version %s<br>", version)
+		fmt.Printf("POD %s<br>", os.Getenv("MY_POD_NAME"))
+		fmt.Printf("Namespace %s<br>", os.Getenv("MY_POD_NAMESPACE"))
 		return
 	}
 
