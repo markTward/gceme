@@ -55,9 +55,7 @@ func main() {
 	flag.Parse()
 
 	if *showversion {
-		fmt.Printf("Version %s<br>", version)
-		fmt.Printf("POD %s<br>", os.Getenv("MY_POD_NAME"))
-		fmt.Printf("Namespace %s<br>", os.Getenv("MY_POD_NAMESPACE"))
+		fmt.Printf("Version %s\n", version)
 		return
 	}
 
@@ -172,14 +170,6 @@ func newInstance() *Instance {
 	i.Project = a.assign(metadata.ProjectID)
 	i.InternalIP = a.assign(metadata.InternalIP)
 	i.ExternalIP = a.assign(metadata.ExternalIP)
-
-
-	// debugging logs
-	log.Println("attempt to access backend container envvar MY_POD_NAME from newInstance:")
-	log.Println(os.Getenv("MY_POD_NAME"))
-
-	log.Println("attempt to access backend container envvar MY_POD_NAMESPACE from newInstance:")
-	log.Println(os.Getenv("MY_POD_NAMESPACE"))
 
 	// read current POD and Namespace
 	i.POD = os.Getenv("MY_POD_NAME")
