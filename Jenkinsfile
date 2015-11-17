@@ -5,7 +5,6 @@ node('docker') {
   def branch = get_branch()
   echo "Current Branch ==> ${branch}"
 
-/*
   // Kubernetes cluster info
   def cluster = 'gtc'
   def zone = 'us-central1-f'
@@ -24,6 +23,7 @@ node('docker') {
   sh('gcloud docker -a')
   img.push()
 
+  /*
   // Deploy image to cluster in DEV namespace
   stage 'Deploy to DEV cluster'
   docker.image('buildpack-deps:jessie-scm').inside {
@@ -75,7 +75,7 @@ def get_branch() {
 
   // read data from file into environment-variable
   current_branch = readFile('git-branch.txt').trim()
-  echo "in get_branch(). current_branch ==> ${current_branch}"
-  current_branch
+
+  return current_branch
 
 }
