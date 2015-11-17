@@ -12,7 +12,7 @@ node('docker') {
   env.gitBranch = readFile('git-branch.txt').trim()
 
   // let people know what's up
-  echo "testing branch ${env.gitBranch}"
+  echo "Build from branch ==> ${env.gitBranch}"
 
   // Run tests
   stage 'Go tests'
