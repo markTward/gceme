@@ -103,6 +103,12 @@ func frontendMode(port int, backendURL string) {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		i := &Instance{}
 
+		log.Println("attempt to access container envvar MY_POD_NAME:")
+		log.Println(os.Getenv("MY_POD_NAME"))
+
+		log.Println("attempt to access container envvar MY_POD_NAMESPACE:")
+		log.Println(os.Getenv("MY_POD_NAMESPACE"))
+
 		// read current POD and Namespace
 		i.POD = os.Getenv("MY_POD_NAME")
 		i.Namespace = os.Getenv("MY_POD_NAMESPACE")
