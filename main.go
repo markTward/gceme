@@ -175,10 +175,10 @@ func newInstance() *Instance {
 
 
 	// debugging logs
-	log.Println("attempt to access container envvar MY_POD_NAME from newInstance:")
+	log.Println("attempt to access backend container envvar MY_POD_NAME from newInstance:")
 	log.Println(os.Getenv("MY_POD_NAME"))
 
-	log.Println("attempt to access container envvar MY_POD_NAMESPACE from newInstance:")
+	log.Println("attempt to access backend container envvar MY_POD_NAMESPACE from newInstance:")
 	log.Println(os.Getenv("MY_POD_NAMESPACE"))
 
 	// read current POD and Namespace
