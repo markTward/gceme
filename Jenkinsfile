@@ -53,16 +53,16 @@ node('docker') {
   }
 */
 
-  def get_branch() {
-    def current_branch = ''
+}
 
-    // write current branch-name to file
-    sh 'git branch -a --contains `git rev-parse HEAD` | grep origin | sed \'s!\\s*remotes/origin/\\(.*\\)!\\1!\' > git-branch.txt'
+def get_branch() {
+  def current_branch = ''
 
-    // read data from file into environment-variable
-    current_branch = readFile('git-branch.txt').trim()
-    echo 'in get_branch(). current_branch ==> ${current_branch}'
+  // write current branch-name to file
+  sh 'git branch -a --contains `git rev-parse HEAD` | grep origin | sed \'s!\\s*remotes/origin/\\(.*\\)!\\1!\' > git-branch.txt'
 
-  }
+  // read data from file into environment-variable
+  current_branch = readFile('git-branch.txt').trim()
+  echo 'in get_branch(). current_branch ==> ${current_branch}'
 
 }
