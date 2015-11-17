@@ -102,6 +102,11 @@ func frontendMode(port int, backendURL string) {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		i := &Instance{}
+
+		// read current POD and Namespace
+		i.POD = os.Getenv("MY_POD_NAME")
+		i.Namespace = os.Getenv("MY_POD_NAMESPACE")
+
 		resp, err := client.Do(req)
 		if err != nil {
 			w.WriteHeader(http.StatusServiceUnavailable)
@@ -169,9 +174,6 @@ func newInstance() *Instance {
 	i.Project = a.assign(metadata.ProjectID)
 	i.InternalIP = a.assign(metadata.InternalIP)
 	i.ExternalIP = a.assign(metadata.ExternalIP)
-
-	i.POD = os.Getenv("MY_POD_NAME")
-	i.Namespace = os.Getenv("MY_POD_NAMESPACE")
 
 	if a.err != nil {
 		i.Error = a.err.Error()
