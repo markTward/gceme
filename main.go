@@ -154,8 +154,6 @@ func (a *assigner) assign(getVal func() (string, error)) string {
 }
 
 func newInstance() *Instance {
-	var pod string
-	var ns string
 	var i = new(Instance)
 
 	if !metadata.OnGCE() {
@@ -172,11 +170,8 @@ func newInstance() *Instance {
 	i.InternalIP = a.assign(metadata.InternalIP)
 	i.ExternalIP = a.assign(metadata.ExternalIP)
 
-	pod = os.Getenv("MY_POD_NAME")
-	i.POD = a.assign(pod)
-
-	ns = os.Getenv("MY_POD_NAMESPACE")
-	i.Namespace = a.assign(ns)
+	i.POD = os.Getenv("MY_POD_NAME")
+	i.Namespace = os.Getenv("MY_POD_NAMESPACE")
 
 	if a.err != nil {
 		i.Error = a.err.Error()
