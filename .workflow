@@ -5,6 +5,15 @@ node('docker') {
   // checkout repo
   git url: 'https://github.com/markTward/gceme.git', branch: 'dev'
 
+  // write current branch-name to file
+  sh 'git branch -a --contains `git rev-parse HEAD` | grep origin | sed \'s!\\s*remotes/origin/\\(.*\\)!\\1!\' > git-branch.txt'
+
+  // read data from file into environment-variable
+  env.gitBranch = readFile('git-branch.txt').trim()
+
+  // let people know what's up
+  echo "testing branch ${env.gitBranch}"
+
   // Run tests
   stage 'Go tests'
   docker.image('golang:1.5.1').inside {
