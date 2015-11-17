@@ -3,7 +3,7 @@ node('docker') {
   checkout scm
 
   def branch = get_branch()
-  echo "Current Branch ==> branch"
+  echo "Current Branch ==> ${branch}"
 
 /*
   // Kubernetes cluster info
@@ -76,5 +76,6 @@ def get_branch() {
   // read data from file into environment-variable
   current_branch = readFile('git-branch.txt').trim()
   echo "in get_branch(). current_branch ==> ${current_branch}"
+  current_branch
 
 }
