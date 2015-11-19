@@ -4,6 +4,7 @@ node('docker') {
 
   def branch = get_branch()
   echo "Current Branch ==> ${branch}"
+  echo "Build Tag ==> ${env.BUILD_TAG}"
 
   // Kubernetes cluster info
   def cluster = 'gtc'
@@ -23,23 +24,38 @@ node('docker') {
   sh('gcloud docker -a')
   img.push()
 
-  // Deploy image to cluster in DEV namespace
-  stage 'Deploy to DEV cluster'
-  def dev_url = deploy_service(cluster, zone, img.id, 'dev')
-  echo "DEV URL ==> ${dev_url}"
+  // workflow routing by branch
+  def isDevBranch = branch =~ /dev/
+  assert isDevBranch instanceof java.util.regex.Matcher
 
-  // Deploy image to cluster in QA namespace
-  stage 'Deploy to QA cluster'
-  def staging_url = deploy_service(cluster, zone, img.id, 'staging')
-  echo "STAGING URL ==> ${staging_url}"
+  def isMasterBranch = branch =~ /master/
+  assert isMasterBranch instanceof java.util.regex.Matcher
 
-  // Deploy to prod if approved
-  stage 'Approve, deploy to prod'
-  input message: "Does staging at $staging_url look good? ", ok: "Deploy to production"
-  sh('gcloud docker -a')
-  img.push('latest')
-  def production_url = deploy_service(cluster, zone, img.id, 'production')
-  echo "PRODUCTION URL ==> ${production_url}"
+  if (isDevBranch || isMasterBranch) {
+
+    if (isDevBranch) {
+      // Deploy image to cluster in DEV namespace
+      stage 'Deploy to DEV cluster'
+      def dev_url = deploy_service(cluster, zone, img.id, 'dev')
+      echo "DEV URL ==> ${dev_url}"
+    }
+
+    if (isMasterBranch) {
+      // Deploy image to cluster in QA namespace
+      stage 'Deploy to QA cluster'
+      def staging_url = deploy_service(cluster, zone, img.id, 'staging')
+      echo "STAGING URL ==> ${staging_url}"
+
+      // Deploy to prod if approved
+      stage 'Approve, deploy to prod'
+      input message: "Does staging at $staging_url look good? ", ok: "Deploy to production"
+      sh('gcloud docker -a')
+      img.push('latest')
+      def production_url = deploy_service(cluster, zone, img.id, 'production')
+      echo "PRODUCTION URL ==> ${production_url}"
+    }
+
+  }
 
 }
 

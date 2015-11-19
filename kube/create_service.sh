@@ -2,6 +2,12 @@
 
 # create gceme service on dev, staging and production namespaces
 
+kubectl create -f ./namespace-feature.yaml
+kubectl --namespace=feature create -f ./service_frontend.yaml
+kubectl --namespace=feature create -f ./service_backend.yaml
+kubectl --namespace=feature create -f ./frontend.yaml
+kubectl --namespace=feature create -f ./backend.yaml
+
 kubectl create -f ./namespace-dev.yaml
 kubectl --namespace=dev create -f ./service_frontend.yaml
 kubectl --namespace=dev create -f ./service_backend.yaml 

@@ -69,6 +69,18 @@ const (
 	  <td>External IP</td>
 	  <td>{{.ExternalIP}}</td>
 	</tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<div class="card blue">
+<div class="card-content white-text">
+<div class="card-title">Kubernetes Metadata</div>
+</div>
+<div class="card-content white">
+<table class="bordered">
+  <tbody>
 	<tr>
 	  <td>POD</td>
 	  <td>{{.POD}}</td>
@@ -77,9 +89,8 @@ const (
 	  <td>Namespace</td>
 	  <td>{{.Namespace}}</td>
 	</tr>
-  </tbody>
+</tbody>
 </table>
-</div>
 </div>
 
 <div class="card blue">
