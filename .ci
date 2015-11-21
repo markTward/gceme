@@ -14,7 +14,7 @@ node('docker') {
   // Build image with Go binary
   stage 'Build Docker image'
 
-  docker.withRegistry('https://dtr.sj.lithium.com', 'xxxdtr_li_marktward') {
+  docker.withRegistry('https://dtr.sj.lithium.com', 'dtr_li_marktward') {
       echo 'inside docker.withRegistry'
       def img = docker.build("marktward/gceme:latest")
       img.push()
