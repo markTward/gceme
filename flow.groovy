@@ -1,7 +1,7 @@
 node('docker') {
     echo 'docker k8s workflow world!'
     echo 'test git pull'
-    git url: 'https://github.com/markTward/gceme.git', branch: 'dev'
+    //git url: 'https://github.com/markTward/gceme.git', branch: 'dev'
     
     stage 'Go tests'
     docker.image('golang:1.5.1').inside {
